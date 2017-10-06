@@ -92,8 +92,11 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
   //var nextArrival1 = moment(trainHour+':'+addMinute,'HH:mm');
   var nextArrival1 = moment(trainHour+':'+trainMinute,'HH:mm');
   var nextArrival = moment(nextArrival1).add(trainFrequency, 'minute').format('HH:mm');
-  var minutesAway = trainMinute + trainFrequency;
-  //console.log(nextArrival.format("HH:mm"));
+  //var minutesAway = trainMinute + trainFrequency; // this is not correct
+  //This is the correct code for minutesAway
+  var currentTime = moment().format("HH:mm");
+  var minutesAway = moment(nextArrival).diff(currentTime);
+  console.log(moment(minutesAway).format("mm"));
 
   // Add each train's data into the table
   $("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + trainDestination + "</td><td>" +
